@@ -1,25 +1,65 @@
 require('express-async-errors');
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const pino = require('pino-http');
+const passport = require('passport');
+const session = require('express-session');
+const pgSession = require('connect-pg-simple');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const util = require('./src/util/index');
-const users = require('./src/routes/users');
+const user = require('./src/routes/user');
+const auth = require('./src/services/auth');
+auth(passport);
 
 const app = express();
 const PORT = 4000;
+const pgStore = pgSession(session);
 
+// ---
+// Middleware
+// ------------------------
 app.use(helmet());
 app.use(pino({ logger: util.logger }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use('*', cors());
 
-app.use('/api/users', users);
+// ---
+// Auth
+// ------------------------
+app.use(
+    session({
+        store: new pgStore({
+            createTableIfMissing: true,
+            conString: process.env.DATABASE_URL,
+        }),
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
+    })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
+// ---
+// Routes
+// ------------------------
+app.use('/api/user', user);
+
+// ---
+// Error handling
+// ------------------------
 app.use(util.logErrors);
 
+// ---
+// Server
+// ------------------------
 app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+    console.log('---');
+    console.log(`Server running on port: ${PORT}`);
+    console.log('----------------------------------');
 });

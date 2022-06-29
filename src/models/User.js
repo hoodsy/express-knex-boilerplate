@@ -1,6 +1,6 @@
 const Model = require('../../db/model');
 
-class Users extends Model {
+class User extends Model {
     static get tableName() {
         return 'users';
     }
@@ -8,10 +8,11 @@ class Users extends Model {
     static get jsonSchema() {
         return {
             type: 'object',
-            required: ['username'],
+            required: ['email', 'password'],
             properties: {
                 id: { type: 'string' },
-                username: { type: 'string' },
+                email: { type: 'string' },
+                password: { type: 'string' },
             },
         };
     }
@@ -31,4 +32,4 @@ class Users extends Model {
     // }
 }
 
-module.exports = Users;
+module.exports = User;

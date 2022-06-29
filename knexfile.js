@@ -5,7 +5,7 @@ module.exports = {
     development: {
         client: 'pg',
         connection: {
-            connectionString: process.env.DB_CONNECTION,
+            connectionString: process.env.DATABASE_URL,
         },
         pool: {
             min: 5,
