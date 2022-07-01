@@ -19,13 +19,12 @@ const create = async ({ email, password }) => {
 const get = async ({ email }) => {
     logger.debug('/services/users/get');
 
-    const user = await User.query().findOne({ email });
+    const user = await User.query().findOne({ email }).returning('');
 
     delete user.password;
     return user;
 };
 
-// includes password in user object
 const getAuth = async ({ email }) => {
     logger.debug('/services/users/getAuth');
 

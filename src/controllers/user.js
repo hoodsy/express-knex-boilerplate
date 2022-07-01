@@ -2,7 +2,18 @@ const UserService = require('../services/user');
 
 const login = async (req, res) => {
     const { user } = req;
+
     res.json(user);
+};
+
+const logout = async (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            next(err);
+        }
+        req.session.destroy();
+        res.sendStatus(200);
+    });
 };
 
 const create = async (req, res) => {
@@ -21,4 +32,10 @@ const get = async (req, res) => {
     res.send(user);
 };
 
-module.exports = { get, create, login };
+const getSession = async (req, res) => {
+    const { user } = req;
+
+    res.send(user);
+};
+
+module.exports = { get, getSession, create, login, logout };

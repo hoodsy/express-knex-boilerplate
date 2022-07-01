@@ -37,13 +37,15 @@ module.exports = (passport) => {
                         });
                     }
 
-                    bcrypt.compare(password, user.password, (err, isMatch) => {
-                        if (isMatch) {
-                            done(null, user);
-                        } else {
-                            done(null, false);
-                        }
-                    });
+                    const isMatch = await bcrypt.compare(
+                        password,
+                        user.password
+                    );
+                    if (isMatch) {
+                        done(null, user);
+                    } else {
+                        done(null, false);
+                    }
                 } catch (error) {
                     done(error);
                 }
