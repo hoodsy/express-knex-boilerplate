@@ -18,6 +18,17 @@ module.exports = {
             directory: './db/seeds',
         },
     },
+    test: {
+        client: 'sqlite3',
+        connection: ':memory:',
+        useNullAsDefault: true,
+        migrations: {
+            directory: './db/migrations',
+        },
+        seeds: {
+            directory: './db/seeds',
+        },
+    },
     onUpdateTrigger: (table) => `
         CREATE TRIGGER ${table}_updated_at
         BEFORE UPDATE ON ${table}

@@ -19,7 +19,7 @@ const create = async ({ email, password }) => {
 const get = async ({ email }) => {
     logger.debug('/services/users/get');
 
-    const user = await User.query().findOne({ email }).returning('');
+    const user = await User.query().findOne({ email });
 
     delete user.password;
     return user;

@@ -1,14 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 
-const user = require('../controllers/user');
+const UserController = require('../controllers/user');
 
 const router = express.Router();
 
-router.post('/login', passport.authenticate('local'), user.login);
-router.get('/logout', user.logout);
-router.post('/create', user.create);
-router.get('/:email', user.get);
-router.get('/', user.getSession);
+router.post('/login', passport.authenticate('local'), UserController.login);
+router.get('/logout', UserController.logout);
+router.post('/create', UserController.create);
+router.get('/:email', UserController.get);
+router.get('/', UserController.getSession);
 
 module.exports = router;

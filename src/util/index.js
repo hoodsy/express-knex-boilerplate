@@ -15,7 +15,7 @@ const logger = pino({
 const logErrors = (err, req, res, next) => {
     if (err) {
         console.error(err.stack);
-        res.status(500);
+        res.sendStatus(500);
     }
 };
 
