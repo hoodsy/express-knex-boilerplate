@@ -1,17 +1,17 @@
-require('express-async-errors');
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const pino = require('pino-http');
-const passport = require('passport');
-const session = require('express-session');
-const pgSession = require('connect-pg-simple');
-const dotenv = require('dotenv');
+import 'express-async-errors';
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import pino from 'pino-http';
+import passport from 'passport';
+import session from 'express-session';
+import pgSession from 'connect-pg-simple';
+import dotenv from 'dotenv';
 dotenv.config();
 
-const util = require('./src/util/index');
-const user = require('./src/routes/user');
-const auth = require('./src/services/auth');
+import util from './util/index';
+import user from './routes/user';
+import auth from './services/auth';
 auth(passport);
 
 const app = express();
@@ -36,7 +36,7 @@ app.use(
             createTableIfMissing: true,
             conString: process.env.DATABASE_URL,
         }),
-        secret: process.env.SESSION_SECRET,
+        secret: process.env.SESSION_SECRET ?? 'secret',
         resave: false,
         saveUninitialized: true,
         cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 }, // 30 days
@@ -55,4 +55,4 @@ app.use('/api/user', user);
 // ------------------------
 app.use(util.logErrors);
 
-module.exports = app;
+export default app;

@@ -1,16 +1,17 @@
-const bcrypt = require('bcrypt');
-const LocalStrategy = require('passport-local').Strategy;
+import bcrypt from 'bcrypt';
+import { Strategy as LocalStrategy } from 'passport-local';
 
-const UserService = require('./user');
+import UserService from './user';
+import User from '../models/User';
 
-module.exports = (passport) => {
-    passport.serializeUser((user, done) => {
+export default (passport: any) => {
+    passport.serializeUser((user: User, done: any) => {
         done(null, user.id);
     });
 
-    passport.deserializeUser(async (id, done) => {
+    passport.deserializeUser(async (id: string, done: any) => {
         try {
-            const user = await UserService.getById({ id });
+            const user = await UserService.getById(id);
 
             if (!user) {
                 return done(null, false, {
@@ -29,9 +30,9 @@ module.exports = (passport) => {
             { usernameField: 'email' },
             async (email, password, done) => {
                 try {
-                    const user = await UserService.getAuth({ email });
+                    const user = await UserService.getAuth(email);
 
-                    if (!user) {
+                    if (!user || !user.password) {
                         return done(null, false, {
                             message: 'User does not exist',
                         });

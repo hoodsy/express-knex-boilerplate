@@ -12,7 +12,7 @@ module.exports = {
             max: 30,
         },
         migrations: {
-            directory: './db/migrations',
+            directory: './src/db/migrations',
         },
         seeds: {
             directory: './db/seeds',
@@ -23,10 +23,10 @@ module.exports = {
         connection: ':memory:',
         useNullAsDefault: true,
         migrations: {
-            directory: './db/migrations',
+            directory: './src/db/migrations',
         },
         seeds: {
-            directory: './db/seeds',
+            directory: './src/db/seeds',
         },
     },
     onUpdateTrigger: (table) => `

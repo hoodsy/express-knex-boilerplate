@@ -1,7 +1,7 @@
-const express = require('express');
-const passport = require('passport');
+import express from 'express';
+import passport from 'passport';
 
-const UserController = require('../controllers/user');
+import UserController from '../controllers/user';
 
 const router = express.Router();
 
@@ -11,4 +11,4 @@ router.post('/create', UserController.create);
 router.get('/:email', UserController.get);
 router.get('/', UserController.getSession);
 
-module.exports = router;
+export default router;

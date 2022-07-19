@@ -1,4 +1,5 @@
-const pino = require('pino');
+import { Request, Response, NextFunction } from 'express';
+import pino from 'pino';
 
 const logger = pino({
     level: 'debug',
@@ -12,14 +13,19 @@ const logger = pino({
         : {}),
 });
 
-const logErrors = (err, req, res, next) => {
+const logErrors = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     if (err) {
         console.error(err.stack);
         res.sendStatus(500);
     }
 };
 
-module.exports = {
+export default {
     logErrors,
     logger,
 };

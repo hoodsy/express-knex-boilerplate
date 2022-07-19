@@ -1,21 +1,27 @@
-const Model = require('../../db/model');
+import Model from '../db/model';
+
+interface User {
+    id: string;
+    email: string;
+    password?: string;
+}
 
 class User extends Model {
     static get tableName() {
         return 'users';
     }
 
-    static get jsonSchema() {
-        return {
-            type: 'object',
-            required: ['email', 'password'],
-            properties: {
-                id: { type: 'string' },
-                email: { type: 'string' },
-                password: { type: 'string' },
-            },
-        };
-    }
+    // static get jsonSchema() {
+    //     return {
+    //         type: 'object',
+    //         required: ['email', 'password'],
+    //         properties: {
+    //             id: { type: 'string' },
+    //             email: { type: 'string' },
+    //             password: { type: 'string' },
+    //         },
+    //     };
+    // }
 
     // https://dev.to/aspittel/objection--knex--painless-postgresql-in-your-node-app--6n6
     // static get relationMappings() {
@@ -32,4 +38,4 @@ class User extends Model {
     // }
 }
 
-module.exports = User;
+export default User;
