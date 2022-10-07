@@ -1,8 +1,8 @@
-const request = require('supertest');
+import request from 'supertest';
 
-const app = require('../../app');
-const db = require('../../db');
-const UserService = require('../services/user');
+import app from '../app';
+import db from '../db';
+import UserService from '../services/user';
 
 const USER = {
     email: 'test@test.com',
@@ -15,13 +15,18 @@ describe('UserService', () => {
     });
 
     test('create', async () => {
-        const user = await UserService.create(USER);
+        const user = await UserService.create(USER.email, USER.password);
         expect(user.email).toEqual(USER.email);
     });
 
     test('get', async () => {
-        const user = await UserService.get({ email: USER.email });
-        expect(user.email).toEqual(USER.email);
+        const user = await UserService.get(USER.email);
+
+        if (user) {
+            expect(user.email).toEqual(USER.email);
+        } else {
+            fail(`No user exists with email ${USER.email}`);
+        }
     });
 });
 

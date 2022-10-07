@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
+        "types": ["node", "jest"],
         "outDir": "./dist",
         "allowJs": true,
-        "target": "es5",
+        "target": "ES2021",
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "esModuleInterop": true,
