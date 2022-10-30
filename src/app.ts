@@ -6,9 +6,11 @@ import pino from 'pino-http';
 import passport from 'passport';
 import session from 'express-session';
 import pgSession from 'connect-pg-simple';
+import { Model } from 'objection';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import knex from './db';
 import util from './util/index';
 import user from './routes/user';
 import auth from './services/auth';
@@ -16,6 +18,7 @@ auth(passport);
 
 const app = express();
 const pgStore = pgSession(session);
+Model.knex(knex);
 
 // ---
 // Middleware
@@ -25,7 +28,6 @@ app.use(pino({ logger: util.logger }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
-// app.use('*', cors());
 
 // ---
 // Auth

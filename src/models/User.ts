@@ -1,41 +1,34 @@
-import Model from '../db/model';
-
-interface User {
-    id: string;
-    email: string;
-    password?: string;
-}
+import { Model } from 'objection';
 
 class User extends Model {
-    static get tableName() {
-        return 'users';
-    }
+    static tableName = 'users';
 
-    // static get jsonSchema() {
-    //     return {
-    //         type: 'object',
-    //         required: ['email', 'password'],
-    //         properties: {
-    //             id: { type: 'string' },
-    //             email: { type: 'string' },
-    //             password: { type: 'string' },
-    //         },
-    //     };
-    // }
+    id!: string;
+    email!: string;
+    password?: string;
 
-    // https://dev.to/aspittel/objection--knex--painless-postgresql-in-your-node-app--6n6
-    // static get relationMappings() {
-    //     return {
-    //         user_rentals: {
-    //             relation: Model.HasManyRelation,
-    //             modelClass: UserRentalListings,
-    //             join: {
-    //                 from: 'users.id',
-    //                 to: 'user_rental_listings.users_id',
-    //             },
-    //         },
-    //     };
-    // }
+    static jsonSchema = {
+        type: 'object',
+        required: ['email'],
+        properties: {
+            id: { type: 'string' },
+            email: { type: 'string' },
+            password: { type: 'string' },
+        },
+    };
+
+    // static relationMappings = () => ({
+    // 	pets: {
+    // 	  relation: Model.HasManyRelation,
+    // 	  // The related model. This can be either a Model subclass constructor or an
+    // 	  // absolute file path to a module that exports one.
+    // 	  modelClass: Animal,
+    // 	  join: {
+    // 		from: 'persons.id',
+    // 		to: 'animals.ownerId',
+    // 	  },
+    // 	},
+    // })
 }
 
 export default User;
